@@ -28,11 +28,20 @@
 
       --filled-bg:#e9f9ef;
       --filled-border:#22c55e;
-      --filled-text:#166534;
-
       --blocked-bg:#fdecec;
       --blocked-border:#ef4444;
-      --blocked-text:#991b1b;
+
+      --chip-almoco-bg:#dcfce7;
+      --chip-almoco-text:#166534;
+      --chip-almoco-border:#86efac;
+
+      --chip-janta-bg:#dbeafe;
+      --chip-janta-text:#1d4ed8;
+      --chip-janta-border:#93c5fd;
+
+      --chip-extra-bg:#fff7ed;
+      --chip-extra-text:#c2410c;
+      --chip-extra-border:#fdba74;
     }
 
     *{ box-sizing:border-box; }
@@ -123,7 +132,7 @@
     main{
       padding:22px;
       display:grid;
-      grid-template-columns: 340px minmax(0, 1fr);
+      grid-template-columns: 360px minmax(0, 1fr);
       gap:18px;
       align-items:start;
     }
@@ -181,6 +190,87 @@
       font-size:12px;
       color:#6b7280;
       line-height:1.4;
+    }
+
+    .detail-panel{
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:#fff;
+      padding:16px;
+    }
+
+    .detail-panel h3{
+      margin:0 0 12px;
+      font-size:16px;
+      color:var(--primary);
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .detail-empty{
+      font-size:13px;
+      color:#6b7280;
+      line-height:1.6;
+    }
+
+    .detail-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .detail-item{
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px;
+      background:#fafafa;
+    }
+
+    .detail-item-label{
+      font-size:11px;
+      font-weight:800;
+      color:#6b7280;
+      margin-bottom:4px;
+      text-transform:uppercase;
+      letter-spacing:.2px;
+    }
+
+    .detail-item-value{
+      font-size:14px;
+      font-weight:700;
+      color:#111827;
+      line-height:1.45;
+      word-break:break-word;
+    }
+
+    .detail-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      border:1px solid var(--border);
+      width:max-content;
+    }
+
+    .detail-badge.almoco{
+      background:var(--chip-almoco-bg);
+      color:var(--chip-almoco-text);
+      border-color:var(--chip-almoco-border);
+    }
+
+    .detail-badge.janta{
+      background:var(--chip-janta-bg);
+      color:var(--chip-janta-text);
+      border-color:var(--chip-janta-border);
+    }
+
+    .detail-badge.extra{
+      background:var(--chip-extra-bg);
+      color:var(--chip-extra-text);
+      border-color:var(--chip-extra-border);
     }
 
     .legend{
@@ -292,13 +382,12 @@
     }
 
     .day{
-      min-height:126px;
+      min-height:144px;
       border-right:1px solid var(--border);
       border-bottom:1px solid var(--border);
       padding:10px;
       position:relative;
       background:#fff;
-      cursor:pointer;
       transition:.18s ease;
       display:flex;
       flex-direction:column;
@@ -323,16 +412,14 @@
     }
 
     .day.blocked-window{
-      cursor:not-allowed;
       opacity:.92;
     }
 
     .day.empty{
-      min-height:126px;
+      min-height:144px;
       border-right:1px solid var(--border);
       border-bottom:1px solid var(--border);
       background:#fff;
-      cursor:default;
     }
 
     .day.empty:hover{
@@ -344,19 +431,9 @@
       box-shadow: inset 0 0 0 2px rgba(34,197,94,.18);
     }
 
-    .day.preenchido .day-number{
-      background:var(--filled-border);
-      color:#fff;
-    }
-
     .day.bloqueado{
       background:var(--blocked-bg) !important;
       box-shadow: inset 0 0 0 2px rgba(239,68,68,.18);
-    }
-
-    .day.bloqueado .day-number{
-      background:var(--blocked-border);
-      color:#fff;
     }
 
     .day-number-row{
@@ -377,10 +454,21 @@
       font-size:14px;
       color:#111827;
       flex:0 0 34px;
+      background:#fff;
     }
 
     .day.today .day-number{
       background:var(--primary);
+      color:#fff;
+    }
+
+    .day.preenchido .day-number{
+      background:#22c55e;
+      color:#fff;
+    }
+
+    .day.bloqueado .day-number{
+      background:#ef4444;
       color:#fff;
     }
 
@@ -401,7 +489,7 @@
       font-weight:700;
       color:#b45309;
       line-height:1.25;
-      min-height:28px;
+      min-height:18px;
     }
 
     .day-info{
@@ -425,28 +513,61 @@
       color:#374151;
     }
 
-    .day-chip.ok{
-      background:#ecfdf3;
-      color:#166534;
-      border-color:#bbf7d0;
-    }
-
     .day-chip.lock{
       background:#fff1f2;
       color:#9f1239;
       border-color:#fecdd3;
     }
 
-    .day-chip.done{
-      background:#dcfce7;
-      color:#166534;
-      border-color:#86efac;
+    .meal-list{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
     }
 
-    .day-chip.block{
-      background:#fee2e2;
-      color:#991b1b;
-      border-color:#fca5a5;
+    .meal-btn{
+      width:100%;
+      border:none;
+      border-radius:10px;
+      padding:7px 9px;
+      text-align:left;
+      font-size:11px;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      cursor:pointer;
+      border:1px solid transparent;
+    }
+
+    .meal-btn:hover{
+      filter:brightness(.98);
+      transform:translateY(-1px);
+    }
+
+    .meal-btn.almoco{
+      background:var(--chip-almoco-bg);
+      color:var(--chip-almoco-text);
+      border-color:var(--chip-almoco-border);
+    }
+
+    .meal-btn.janta{
+      background:var(--chip-janta-bg);
+      color:var(--chip-janta-text);
+      border-color:var(--chip-janta-border);
+    }
+
+    .meal-btn.extra{
+      background:var(--chip-extra-bg);
+      color:var(--chip-extra-text);
+      border-color:var(--chip-extra-border);
+    }
+
+    .meal-btn small{
+      font-size:10px;
+      opacity:.9;
+      font-weight:700;
     }
 
     .day-helper{
@@ -475,12 +596,11 @@
     @media (max-width: 720px){
       main{ padding:14px; }
       .calendar-title{ font-size:20px; min-width:auto; }
-      .day{ min-height:108px; padding:8px; }
-      .day.empty{ min-height:108px; }
+      .day{ min-height:130px; padding:8px; }
+      .day.empty{ min-height:130px; }
       .day-number{ width:30px; height:30px; flex-basis:30px; font-size:13px; }
       .weekday{ padding:10px 4px; font-size:11px; }
-      .day-holiday-name{ font-size:10px; min-height:24px; }
-      .day-chip{ font-size:10px; padding:5px 7px; }
+      .day-chip, .meal-btn{ font-size:10px; }
     }
   </style>
 </head>
@@ -492,7 +612,7 @@
       </div>
       <div>
         <h1>ADD - Página Inicial</h1>
-        <p>Calendário mensal com status visual dos dias</p>
+        <p>Calendário mensal com detalhes por refeição</p>
       </div>
     </div>
 
@@ -528,19 +648,22 @@
           <div class="kpi">
             <div class="label">Dias preenchidos</div>
             <div class="value" id="kpiPreenchidos">0</div>
-            <div class="sub">Dias com lançamento já registrado no mês</div>
+            <div class="sub">Dias com ao menos um lançamento no mês</div>
           </div>
 
           <div class="kpi">
             <div class="label">Dias bloqueados</div>
             <div class="value" id="kpiBloqueados">0</div>
-            <div class="sub">Dias bloqueados para lançamento no mês</div>
+            <div class="sub">Dias bloqueados para lançamento</div>
           </div>
+        </div>
+      </div>
 
-          <div class="kpi">
-            <div class="label">Dias úteis</div>
-            <div class="value" id="kpiUteis">0</div>
-            <div class="sub">No mês atual, desconsiderando finais de semana e feriados</div>
+      <div class="card pad">
+        <div class="detail-panel">
+          <h3><i class="bi bi-card-list"></i> Detalhes do lançamento</h3>
+          <div id="detailContent" class="detail-empty">
+            Clique em <strong>Almoço</strong>, <strong>Janta</strong> ou <strong>Extra</strong> dentro de um dia preenchido para ver os detalhes aqui.
           </div>
         </div>
       </div>
@@ -550,39 +673,19 @@
           <h3><i class="bi bi-palette"></i> Legenda</h3>
 
           <div class="legend-item">
-            <span class="legend-swatch" style="background:var(--today)"></span>
-            <span>Hoje</span>
-          </div>
-
-          <div class="legend-item">
-            <span class="legend-swatch" style="background:var(--weekend)"></span>
-            <span>Final de semana</span>
-          </div>
-
-          <div class="legend-item">
-            <span class="legend-swatch" style="background:var(--holiday)"></span>
-            <span>Feriado</span>
-          </div>
-
-          <div class="legend-item">
             <span class="legend-swatch" style="background:var(--filled-bg)"></span>
-            <span>Preenchido</span>
+            <span>Dia preenchido</span>
           </div>
 
           <div class="legend-item">
             <span class="legend-swatch" style="background:var(--blocked-bg)"></span>
-            <span>Bloqueado</span>
+            <span>Dia bloqueado</span>
           </div>
-        </div>
-      </div>
 
-      <div class="card pad">
-        <div style="font-size:15px;font-weight:800;color:var(--primary);margin-bottom:8px;">
-          <i class="bi bi-lightning-charge"></i> Como funciona
-        </div>
-        <div style="font-size:13px;color:#555;line-height:1.6;">
-          Verde = já lançado. Vermelho = bloqueado.  
-          Clique em um dia disponível para abrir o formulário com a data já preenchida.
+          <div class="legend-item">
+            <span class="legend-swatch" style="background:var(--today)"></span>
+            <span>Hoje</span>
+          </div>
         </div>
       </div>
     </aside>
@@ -632,14 +735,12 @@
     }
 
     // LOGIN TEMPORARIAMENTE DESATIVADO
-    // if (localStorage.getItem("logado") !== "true") {
-    //   logout();
-    // }
+    // if (localStorage.getItem("logado") !== "true") logout();
 
     const state = {
       current: new Date(),
       matricula: String(localStorage.getItem("matricula") || "").trim(),
-      preenchidos: new Set(),
+      registrosPorData: new Map(),
       bloqueados: new Set()
     };
 
@@ -677,6 +778,22 @@
         && a.getDate() === b.getDate();
     }
 
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function formatarDataBR(iso){
+      const s = String(iso || "").trim();
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return s || "-";
+      const [y,m,d] = s.split("-");
+      return `${d}/${m}/${y}`;
+    }
+
     function formatarDataLonga(date){
       return date.toLocaleDateString("pt-BR", {
         weekday: "long",
@@ -686,13 +803,23 @@
       });
     }
 
-    function escapeHtml(str){
-      return String(str ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
+    function normalizarTipo(tipo){
+      return String(tipo || "").trim().toUpperCase();
+    }
+
+    function classeTipo(tipo){
+      const t = normalizarTipo(tipo);
+      if (t === "ALMOÇO" || t === "ALMOCO") return "almoco";
+      if (t === "JANTA") return "janta";
+      return "extra";
+    }
+
+    function rotuloTipo(tipo){
+      const t = normalizarTipo(tipo);
+      if (t === "ALMOÇO" || t === "ALMOCO") return "Almoço";
+      if (t === "JANTA") return "Janta";
+      if (t === "EXTRA") return "Extra";
+      return t || "Registro";
     }
 
     function calcularPascoa(ano){
@@ -721,7 +848,6 @@
 
     function getFeriadosAno(ano){
       const pascoa = calcularPascoa(ano);
-
       return [
         { data: `${ano}-01-01`, nome: "Confraternização Universal" },
         { data: `${ano}-04-21`, nome: "Tiradentes" },
@@ -732,7 +858,6 @@
         { data: `${ano}-11-15`, nome: "Proclamação da República" },
         { data: `${ano}-11-20`, nome: "Dia da Consciência Negra" },
         { data: `${ano}-12-25`, nome: "Natal" },
-
         { data: toISODate(addDias(pascoa, -48)), nome: "Carnaval" },
         { data: toISODate(addDias(pascoa, -47)), nome: "Carnaval" },
         { data: toISODate(addDias(pascoa, -2)), nome: "Sexta-feira Santa" },
@@ -744,33 +869,6 @@
       const map = new Map();
       getFeriadosAno(ano).forEach(item => map.set(item.data, item.nome));
       return map;
-    }
-
-    function obterJanelaPermitida(){
-      const hoje = new Date();
-      hoje.setHours(0,0,0,0);
-
-      const primeiroDiaMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
-      primeiroDiaMes.setHours(0,0,0,0);
-
-      let minDate = new Date(primeiroDiaMes);
-
-      if (hoje.getDate() <= 3) {
-        minDate = new Date(hoje);
-        minDate.setDate(hoje.getDate() - 3);
-      }
-
-      const maxDate = new Date(hoje);
-      maxDate.setDate(hoje.getDate() + 3);
-      maxDate.setHours(0,0,0,0);
-
-      return { minDate, maxDate, hoje };
-    }
-
-    function isDentroJanela(date){
-      const { minDate, maxDate } = obterJanelaPermitida();
-      const d = normalizarData(date);
-      return d >= minDate && d <= maxDate;
     }
 
     function montarMesAnoSelects(){
@@ -788,29 +886,25 @@
     }
 
     function atualizarKPIs(ano, mes){
-      const holidayMap = getHolidayMap(ano);
-      const totalDias = new Date(ano, mes + 1, 0).getDate();
+      let diasPreenchidos = 0;
+      let diasBloqueados = 0;
 
-      let uteis = 0;
+      for (const [data, lista] of state.registrosPorData.entries()){
+        if (data.startsWith(`${ano}-${pad(mes+1)}-`) && lista.length) diasPreenchidos++;
+      }
 
-      for (let dia = 1; dia <= totalDias; dia++){
-        const d = new Date(ano, mes, dia);
-        const dow = d.getDay();
-        const iso = toISODate(d);
-        const ehFds = dow === 0 || dow === 6;
-        const ehFeriado = holidayMap.has(iso);
-
-        if (!ehFds && !ehFeriado) uteis++;
+      for (const data of state.bloqueados.values()){
+        if (String(data).startsWith(`${ano}-${pad(mes+1)}-`)) diasBloqueados++;
       }
 
       document.getElementById("kpiMes").textContent = `${pad(mes+1)}/${ano}`;
-      document.getElementById("kpiUteis").textContent = uteis;
-      document.getElementById("kpiPreenchidos").textContent = state.preenchidos.size;
-      document.getElementById("kpiBloqueados").textContent = state.bloqueados.size;
+      document.getElementById("kpiPreenchidos").textContent = diasPreenchidos;
+      document.getElementById("kpiBloqueados").textContent = diasBloqueados;
     }
 
-    async function fetchPreenchidos(ano, mes){
-      if (!state.matricula) return new Set();
+    async function fetchRegistros(ano, mes){
+      const mapa = new Map();
+      if (!state.matricula) return mapa;
 
       try {
         const qs = new URLSearchParams({
@@ -820,25 +914,38 @@
         });
 
         const resp = await fetch(`${API}/buscar?${qs.toString()}`);
-        if (!resp.ok) return new Set();
+        if (!resp.ok) return mapa;
 
         const json = await resp.json();
-        const set = new Set();
+        const lista = Array.isArray(json) ? json : [];
 
-        (Array.isArray(json) ? json : []).forEach(item => {
+        for (const item of lista) {
           const datauso = String(item.datauso || "").trim();
-          if (/^\d{4}-\d{2}-\d{2}$/.test(datauso)) set.add(datauso);
-        });
+          if (!/^\d{4}-\d{2}-\d{2}$/.test(datauso)) continue;
 
-        return set;
+          if (!mapa.has(datauso)) mapa.set(datauso, []);
+          mapa.get(datauso).push(item);
+        }
+
+        for (const arr of mapa.values()) {
+          arr.sort((a, b) => {
+            const ta = normalizarTipo(a.tiporefeicao);
+            const tb = normalizarTipo(b.tiporefeicao);
+            const ordem = { "ALMOÇO": 1, "ALMOCO": 1, "JANTA": 2, "EXTRA": 3 };
+            return (ordem[ta] || 99) - (ordem[tb] || 99);
+          });
+        }
+
+        return mapa;
       } catch (err) {
-        console.error("Erro ao buscar preenchidos:", err);
-        return new Set();
+        console.error("Erro ao buscar registros:", err);
+        return mapa;
       }
     }
 
     async function fetchBloqueados(ano, mes){
-      if (!state.matricula) return new Set();
+      const set = new Set();
+      if (!state.matricula) return set;
 
       try {
         const totalDiasMes = new Date(ano, mes + 1, 0).getDate();
@@ -860,16 +967,86 @@
         }
 
         const resultados = await Promise.all(promessas);
-        return new Set(resultados.filter(Boolean));
+        resultados.filter(Boolean).forEach(x => set.add(x));
+        return set;
       } catch (err) {
         console.error("Erro ao buscar bloqueados:", err);
-        return new Set();
+        return set;
       }
     }
 
     function abrirFormularioComData(date){
       const iso = toISODate(date);
       window.location.href = `${FORM_URL}?data=${encodeURIComponent(iso)}`;
+    }
+
+    function renderDetalheRegistro(item){
+      const tipo = rotuloTipo(item.tiporefeicao);
+      const cls = classeTipo(item.tiporefeicao);
+      const horario = item.horario || "-";
+      const datauso = formatarDataBR(item.datauso || "");
+      const local = item.localidade || "-";
+      const observacao = item.observacao || "-";
+      const polo = item.polo || "-";
+
+      document.getElementById("detailContent").innerHTML = `
+        <div class="detail-list">
+          <span class="detail-badge ${cls}">
+            <i class="bi bi-utensils"></i> ${escapeHtml(tipo)}
+          </span>
+
+          <div class="detail-item">
+            <div class="detail-item-label">Data</div>
+            <div class="detail-item-value">${escapeHtml(datauso)}</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-item-label">Tipo de refeição</div>
+            <div class="detail-item-value">${escapeHtml(tipo)}</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-item-label">Horário</div>
+            <div class="detail-item-value">${escapeHtml(horario)}</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-item-label">Local</div>
+            <div class="detail-item-value">${escapeHtml(local)}</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-item-label">Polo</div>
+            <div class="detail-item-value">${escapeHtml(polo)}</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="detail-item-label">Observação</div>
+            <div class="detail-item-value">${escapeHtml(observacao)}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderMealButtons(registros){
+      if (!registros || !registros.length) return "";
+
+      const html = registros.map((item, idx) => {
+        const cls = classeTipo(item.tiporefeicao);
+        const tipo = rotuloTipo(item.tiporefeicao);
+        const horario = item.horario ? String(item.horario) : "";
+        return `
+          <button
+            type="button"
+            class="meal-btn ${cls}"
+            data-detail='${escapeHtml(JSON.stringify(item))}'>
+            <span>${escapeHtml(tipo)}</span>
+            <small>${escapeHtml(horario || "")}</small>
+          </button>
+        `;
+      }).join("");
+
+      return `<div class="meal-list">${html}</div>`;
     }
 
     function renderCalendar(){
@@ -881,7 +1058,7 @@
 
       document.getElementById("calendarTitle").textContent = `${MESES[mes]} ${ano}`;
       document.getElementById("calendarSubtitle").textContent =
-        "Clique em um dia disponível para abrir o formulário com a data já preenchida";
+        "Clique em Almoço, Janta ou Extra para ver os detalhes na lateral";
 
       document.getElementById("selectMes").value = String(mes);
       document.getElementById("selectAno").value = String(ano);
@@ -927,44 +1104,42 @@
         const holidayName = holidayMap.get(iso) || "";
         const isHoliday = !!holidayName;
         const isToday = sameDate(date, hoje);
-        const dentroJanela = isDentroJanela(date);
-        const isPreenchido = state.preenchidos.has(iso);
         const isBloqueado = state.bloqueados.has(iso);
+        const registros = state.registrosPorData.get(iso) || [];
+        const isPreenchido = registros.length > 0;
 
         let classes = ["day"];
         if (isWeekend) classes.push("weekend");
         if (isHoliday) classes.push("holiday");
         if (isToday) classes.push("today");
-        if (!dentroJanela) classes.push("blocked-window");
         if (isPreenchido) classes.push("preenchido");
         if (isBloqueado) classes.push("bloqueado");
 
         let helper = "";
         if (isBloqueado) {
-          helper = `<div class="day-chip block"><i class="bi bi-x-circle"></i> Bloqueado</div>`;
+          helper = `<div class="day-chip lock"><i class="bi bi-x-circle"></i> Bloqueado</div>`;
         } else if (isPreenchido) {
-          helper = `<div class="day-chip done"><i class="bi bi-check-circle"></i> Preenchido</div>`;
-        } else if (dentroJanela) {
-          helper = `<div class="day-chip ok"><i class="bi bi-box-arrow-up-right"></i> Abrir formulário</div>`;
+          helper = renderMealButtons(registros);
         } else {
-          helper = `<div class="day-chip lock"><i class="bi bi-lock-fill"></i> Fora da janela</div>`;
+          helper = `
+            <button type="button" class="day-chip" data-open-date="${iso}" style="cursor:pointer;">
+              <i class="bi bi-box-arrow-up-right"></i> Abrir formulário
+            </button>
+          `;
         }
 
         const extraTag = isBloqueado
           ? `<span class="tag-mini" style="color:#991b1b;">BLOQ</span>`
           : isPreenchido
-            ? `<span class="tag-mini" style="color:#166534;">OK</span>`
+            ? `<span class="tag-mini" style="color:#166534;">LANÇADO</span>`
             : isWeekend
               ? `<span class="tag-mini">FDS</span>`
               : isHoliday
-                ? `<span class="tag-mini">Feriado</span>`
+                ? `<span class="tag-mini">FERIADO</span>`
                 : "";
 
         html += `
-          <div class="${classes.join(" ")}"
-               data-date="${iso}"
-               data-bloqueado="${isBloqueado ? "1" : "0"}"
-               title="${escapeHtml(formatarDataLonga(date))}">
+          <div class="${classes.join(" ")}" data-date="${iso}">
             <div class="day-number-row">
               <div class="day-number">${date.getDate()}</div>
               ${extraTag}
@@ -982,15 +1157,37 @@
 
       grid.innerHTML = html;
 
-      grid.querySelectorAll(".day:not(.empty)").forEach(el => {
-        el.addEventListener("click", () => {
-          if (el.dataset.bloqueado === "1") return;
-
-          const iso = el.dataset.date;
+      grid.querySelectorAll("[data-open-date]").forEach(btn => {
+        btn.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          const iso = btn.getAttribute("data-open-date");
           if (!iso) return;
+          abrirFormularioComData(new Date(iso + "T00:00:00"));
+        });
+      });
 
-          const d = new Date(iso + "T00:00:00");
-          abrirFormularioComData(d);
+      grid.querySelectorAll(".meal-btn").forEach(btn => {
+        btn.addEventListener("click", (ev) => {
+          ev.stopPropagation();
+          const raw = btn.getAttribute("data-detail");
+          if (!raw) return;
+
+          try {
+            const item = JSON.parse(raw);
+            renderDetalheRegistro(item);
+          } catch (e) {
+            console.error("Erro ao abrir detalhe:", e);
+          }
+        });
+      });
+
+      grid.querySelectorAll(".day").forEach(dayEl => {
+        dayEl.addEventListener("dblclick", () => {
+          const iso = dayEl.getAttribute("data-date");
+          if (!iso) return;
+          if (state.bloqueados.has(iso)) return;
+          if (state.registrosPorData.has(iso)) return;
+          abrirFormularioComData(new Date(iso + "T00:00:00"));
         });
       });
 
@@ -1001,14 +1198,14 @@
       const ano = state.current.getFullYear();
       const mes = state.current.getMonth();
 
-      setStatus("Carregando preenchidos e bloqueios do mês...", "");
+      setStatus("Carregando lançamentos e bloqueios do mês...", "");
 
-      const [preenchidos, bloqueados] = await Promise.all([
-        fetchPreenchidos(ano, mes),
+      const [registrosPorData, bloqueados] = await Promise.all([
+        fetchRegistros(ano, mes),
         fetchBloqueados(ano, mes)
       ]);
 
-      state.preenchidos = preenchidos;
+      state.registrosPorData = registrosPorData;
       state.bloqueados = bloqueados;
 
       renderCalendar();
