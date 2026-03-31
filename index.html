@@ -310,11 +310,6 @@
       background:var(--day-hover);
     }
 
-    .day.outside{
-      background:#fafafa;
-      color:#9ca3af;
-    }
-
     .day.weekend{
       background:var(--weekend);
     }
@@ -331,6 +326,18 @@
     .day.blocked{
       cursor:not-allowed;
       opacity:.86;
+    }
+
+    .day.empty{
+      min-height:126px;
+      border-right:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      background:#fff;
+      cursor:default;
+    }
+
+    .day.empty:hover{
+      background:#fff;
     }
 
     .day-number-row{
@@ -440,22 +447,12 @@
         position:static;
       }
     }
-    .day.empty{
-  min-height:126px;
-  border-right:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  background:#fff;
-  cursor:default;
-}
-
-.day.empty:hover{
-  background:#fff;
-}
 
     @media (max-width: 720px){
       main{ padding:14px; }
       .calendar-title{ font-size:20px; min-width:auto; }
       .day{ min-height:108px; padding:8px; }
+      .day.empty{ min-height:108px; }
       .day-number{ width:30px; height:30px; flex-basis:30px; font-size:13px; }
       .weekday{ padding:10px 4px; font-size:11px; }
       .day-holiday-name{ font-size:10px; min-height:24px; }
@@ -479,12 +476,15 @@
       <a class="btn-link" href="https://coec-epb.github.io/prestacao_de_contas/">
         <i class="bi bi-file-earmark-text"></i> Abrir formulário
       </a>
+
       <button class="secondary" id="btnHoje">
         <i class="bi bi-calendar-date"></i> Hoje
       </button>
+
       <button class="secondary" id="btnAtualizar">
         <i class="bi bi-arrow-repeat"></i> Atualizar
       </button>
+
       <button class="secondary" onclick="logout()">
         <i class="bi bi-box-arrow-right"></i> Sair
       </button>
@@ -557,7 +557,7 @@
           <i class="bi bi-lightning-charge"></i> Como funciona
         </div>
         <div style="font-size:13px;color:#555;line-height:1.6;">
-          Clique em qualquer dia do mês para abrir o formulário.  
+          Clique em qualquer dia do mês para abrir o formulário.
           Se a data estiver dentro da janela permitida, ela já vai preenchida automaticamente.
         </div>
       </div>
@@ -590,9 +590,7 @@
         <div id="status" class="status"></div>
       </div>
 
-      <div class="calendar-grid" id="calendarGrid">
-        <!-- preenchido via JS -->
-      </div>
+      <div class="calendar-grid" id="calendarGrid"></div>
 
       <div class="footer-note">
         Desenvolvido por Pedro Fillype – Grupo Energisa
@@ -606,10 +604,10 @@
       window.location.href = "https://coec-epb.github.io/login/";
     }
 
-    // 🔓 LOGIN TEMPORARIAMENTE DESATIVADO
-// if (localStorage.getItem("logado") !== "true") {
-//   logout();
-// }
+    // LOGIN TEMPORARIAMENTE DESATIVADO
+    // if (localStorage.getItem("logado") !== "true") {
+    //   logout();
+    // }
 
     const FORM_URL = "https://coec-epb.github.io/prestacao_de_contas/";
     const state = {
@@ -696,7 +694,7 @@
     function getFeriadosAno(ano){
       const pascoa = calcularPascoa(ano);
 
-      const lista = [
+      return [
         { data: `${ano}-01-01`, nome: "Confraternização Universal" },
         { data: `${ano}-04-21`, nome: "Tiradentes" },
         { data: `${ano}-05-01`, nome: "Dia do Trabalho" },
@@ -712,8 +710,6 @@
         { data: toISODate(addDias(pascoa, -2)), nome: "Sexta-feira Santa" },
         { data: toISODate(addDias(pascoa, 60)), nome: "Corpus Christi" }
       ];
-
-      return lista;
     }
 
     function getHolidayMap(ano){
@@ -820,78 +816,90 @@
       });
 
       const firstDay = new Date(ano, mes, 1);
-const startWeekDay = firstDay.getDay();
-const totalDiasMes = new Date(ano, mes + 1, 0).getDate();
+      const startWeekDay = firstDay.getDay();
+      const totalDiasMes = new Date(ano, mes + 1, 0).getDate();
 
-const cells = [];
+      const cells = [];
 
-// espaços vazios antes do dia 1
-for (let i = 0; i < startWeekDay; i++) {
-  cells.push({ empty: true });
-}
+      for (let i = 0; i < startWeekDay; i++) {
+        cells.push({ empty: true });
+      }
 
-// dias reais do mês
-for (let dia = 1; dia <= totalDiasMes; dia++) {
-  cells.push({
-    empty: false,
-    date: new Date(ano, mes, dia)
-  });
-}
+      for (let dia = 1; dia <= totalDiasMes; dia++) {
+        cells.push({
+          empty: false,
+          date: new Date(ano, mes, dia)
+        });
+      }
 
-// completa a última linha com vazios
-while (cells.length % 7 !== 0) {
-  cells.push({ empty: true });
-}
+      while (cells.length % 7 !== 0) {
+        cells.push({ empty: true });
+      }
 
-cells.forEach(cell => {
-  if (cell.empty) {
-    html += `<div class="day empty"></div>`;
-    return;
-  }
+      cells.forEach(cell => {
+        if (cell.empty) {
+          html += `<div class="day empty"></div>`;
+          return;
+        }
 
-  const date = normalizarData(cell.date);
-  const iso = toISODate(date);
-  const dow = date.getDay();
-  const isWeekend = dow === 0 || dow === 6;
-  const holidayName = holidayMap.get(iso) || "";
-  const isHoliday = !!holidayName;
-  const isToday = sameDate(date, hoje);
-  const dentroJanela = isDentroJanela(date);
+        const date = normalizarData(cell.date);
+        const iso = toISODate(date);
+        const dow = date.getDay();
+        const isWeekend = dow === 0 || dow === 6;
+        const holidayName = holidayMap.get(iso) || "";
+        const isHoliday = !!holidayName;
+        const isToday = sameDate(date, hoje);
+        const dentroJanela = isDentroJanela(date);
 
-  let classes = ["day"];
-  if (isWeekend) classes.push("weekend");
-  if (isHoliday) classes.push("holiday");
-  if (isToday) classes.push("today");
-  if (!dentroJanela) classes.push("blocked");
+        let classes = ["day"];
+        if (isWeekend) classes.push("weekend");
+        if (isHoliday) classes.push("holiday");
+        if (isToday) classes.push("today");
+        if (!dentroJanela) classes.push("blocked");
 
-  const helper = dentroJanela
-    ? `<div class="day-chip ok"><i class="bi bi-box-arrow-up-right"></i> Abrir formulário</div>`
-    : `<div class="day-chip lock"><i class="bi bi-lock-fill"></i> Fora da janela</div>`;
+        const helper = dentroJanela
+          ? `<div class="day-chip ok"><i class="bi bi-box-arrow-up-right"></i> Abrir formulário</div>`
+          : `<div class="day-chip lock"><i class="bi bi-lock-fill"></i> Fora da janela</div>`;
 
-  const extraTag = isWeekend
-    ? `<span class="tag-mini">FDS</span>`
-    : isHoliday
-      ? `<span class="tag-mini">Feriado</span>`
-      : "";
+        const extraTag = isWeekend
+          ? `<span class="tag-mini">FDS</span>`
+          : isHoliday
+            ? `<span class="tag-mini">Feriado</span>`
+            : "";
 
-  html += `
-    <div class="${classes.join(" ")}"
-         data-date="${iso}"
-         title="${escapeHtml(formatarDataLonga(date))}">
-      <div class="day-number-row">
-        <div class="day-number">${date.getDate()}</div>
-        ${extraTag}
-      </div>
+        html += `
+          <div class="${classes.join(" ")}"
+               data-date="${iso}"
+               title="${escapeHtml(formatarDataLonga(date))}">
+            <div class="day-number-row">
+              <div class="day-number">${date.getDate()}</div>
+              ${extraTag}
+            </div>
 
-      <div class="day-holiday-name">${escapeHtml(holidayName || "")}</div>
+            <div class="day-holiday-name">${escapeHtml(holidayName || "")}</div>
 
-      <div class="day-info">
-        ${helper}
-        <div class="day-helper">${escapeHtml(formatarDataLonga(date))}</div>
-      </div>
-    </div>
-  `;
-});
+            <div class="day-info">
+              ${helper}
+              <div class="day-helper">${escapeHtml(formatarDataLonga(date))}</div>
+            </div>
+          </div>
+        `;
+      });
+
+      grid.innerHTML = html;
+
+      grid.querySelectorAll(".day:not(.empty)").forEach(el => {
+        el.addEventListener("click", () => {
+          const iso = el.dataset.date;
+          if (!iso) return;
+
+          const d = new Date(iso + "T00:00:00");
+          abrirFormularioComData(d);
+        });
+      });
+
+      setStatus("Calendário carregado com sucesso.", "success");
+    }
 
     function mudarMes(delta){
       state.current = new Date(state.current.getFullYear(), state.current.getMonth() + delta, 1);
