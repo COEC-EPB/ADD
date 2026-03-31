@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>ADD - Início</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary:#0097CE;
+      --primary-dark:#007fb0;
+      --orange:#F36F21;
+      --bg:#f4f6f8;
+      --card:#fff;
+      --text:#333;
+      --border:#e0e0e0;
+      --danger:#b3261e;
+      --success:#137333;
+      --warning:#b26a00;
+      --muted:#6b7280;
+      --holiday:#fff4e8;
+      --weekend:#faf7f7;
+      --today:#e8f6fd;
+      --day-hover:#f0f9ff;
+      --shadow:0 6px 20px rgba(0,0,0,.08);
+      --radius:16px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family:"Segoe UI", Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    header{
+      background:var(--card);
+      padding:16px 24px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      box-shadow:0 2px 8px rgba(0,0,0,.08);
+      position:sticky;
+      top:0;
+      z-index:20;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:260px;
+    }
+
+    .brand .logo{
+      width:44px;
+      height:44px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-size:22px;
+      box-shadow:0 6px 14px rgba(0,151,206,.25);
+    }
+
+    .brand h1{
+      margin:0;
+      font-size:20px;
+      color:var(--primary);
+    }
+
+    .brand p{
+      margin:2px 0 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .header-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    button, .btn-link{
+      border:none;
+      border-radius:12px;
+      padding:10px 14px;
+      font-size:14px;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+
+    button.primary{
+      background:var(--primary);
+      color:#fff;
+    }
+
+    button.primary:hover{
+      background:var(--primary-dark);
+    }
+
+    button.secondary, .btn-link{
+      background:#fff;
+      color:#333;
+      border:1px solid var(--border);
+    }
+
+    button.secondary:hover, .btn-link:hover{
+      background:#f8fafc;
+    }
+
+    main{
+      padding:22px;
+      display:grid;
+      grid-template-columns: 340px minmax(0, 1fr);
+      gap:18px;
+      align-items:start;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .pad{
+      padding:16px;
+    }
+
+    .sidebar{
+      display:grid;
+      gap:16px;
+      position:sticky;
+      top:92px;
+    }
+
+    .kpi-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+    }
+
+    .kpi{
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:#fff;
+      padding:14px;
+    }
+
+    .kpi .label{
+      font-size:12px;
+      color:#666;
+      font-weight:700;
+      margin-bottom:8px;
+      text-transform:uppercase;
+      letter-spacing:.2px;
+    }
+
+    .kpi .value{
+      font-size:28px;
+      line-height:1;
+      font-weight:900;
+      color:#111827;
+    }
+
+    .kpi .sub{
+      margin-top:8px;
+      font-size:12px;
+      color:#6b7280;
+      line-height:1.4;
+    }
+
+    .legend{
+      display:grid;
+      gap:10px;
+    }
+
+    .legend h3{
+      margin:0 0 6px;
+      font-size:15px;
+      color:var(--primary);
+    }
+
+    .legend-item{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:13px;
+      color:#444;
+    }
+
+    .legend-swatch{
+      width:16px;
+      height:16px;
+      border-radius:5px;
+      border:1px solid rgba(0,0,0,.08);
+      flex:0 0 16px;
+    }
+
+    .calendar-wrap{
+      display:grid;
+      gap:14px;
+    }
+
+    .calendar-toolbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      padding:16px;
+      border-bottom:1px solid var(--border);
+      background:#fff;
+    }
+
+    .calendar-left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .calendar-title{
+      font-size:24px;
+      font-weight:900;
+      color:#1f2937;
+      min-width:220px;
+    }
+
+    .calendar-subtitle{
+      font-size:13px;
+      color:#6b7280;
+    }
+
+    .toolbar-group{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    select{
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:10px 12px;
+      background:#fff;
+      font-size:14px;
+      outline:none;
+    }
+
+    .status{
+      font-size:13px;
+      color:#666;
+      min-height:18px;
+    }
+
+    .status.success{ color:var(--success); }
+    .status.error{ color:var(--danger); }
+
+    .calendar-grid{
+      display:grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      border-top:1px solid var(--border);
+      border-left:1px solid var(--border);
+      background:#fff;
+    }
+
+    .weekday{
+      background:#f8fafc;
+      border-right:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      padding:12px 8px;
+      text-align:center;
+      font-weight:800;
+      font-size:12px;
+      color:#64748b;
+      text-transform:uppercase;
+      letter-spacing:.5px;
+    }
+
+    .day{
+      min-height:126px;
+      border-right:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      padding:10px;
+      position:relative;
+      background:#fff;
+      cursor:pointer;
+      transition:.18s ease;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .day:hover{
+      background:var(--day-hover);
+    }
+
+    .day.outside{
+      background:#fafafa;
+      color:#9ca3af;
+    }
+
+    .day.weekend{
+      background:var(--weekend);
+    }
+
+    .day.holiday{
+      background:var(--holiday);
+    }
+
+    .day.today{
+      background:var(--today);
+      box-shadow: inset 0 0 0 2px rgba(0,151,206,.20);
+    }
+
+    .day.blocked{
+      cursor:not-allowed;
+      opacity:.86;
+    }
+
+    .day-number-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:8px;
+    }
+
+    .day-number{
+      width:34px;
+      height:34px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      font-size:14px;
+      color:#111827;
+      flex:0 0 34px;
+    }
+
+    .day.today .day-number{
+      background:var(--primary);
+      color:#fff;
+    }
+
+    .tag-mini{
+      font-size:10px;
+      padding:4px 8px;
+      border-radius:999px;
+      font-weight:800;
+      border:1px solid var(--border);
+      background:#fff;
+      color:#555;
+      text-transform:uppercase;
+      letter-spacing:.2px;
+    }
+
+    .day-holiday-name{
+      font-size:11px;
+      font-weight:700;
+      color:#b45309;
+      line-height:1.25;
+      min-height:28px;
+    }
+
+    .day-info{
+      margin-top:auto;
+      display:grid;
+      gap:6px;
+    }
+
+    .day-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      width:max-content;
+      max-width:100%;
+      padding:6px 8px;
+      border-radius:10px;
+      font-size:11px;
+      font-weight:700;
+      border:1px solid var(--border);
+      background:#fff;
+      color:#374151;
+    }
+
+    .day-chip.ok{
+      background:#ecfdf3;
+      color:#166534;
+      border-color:#bbf7d0;
+    }
+
+    .day-chip.warn{
+      background:#fff7ed;
+      color:#9a3412;
+      border-color:#fed7aa;
+    }
+
+    .day-chip.lock{
+      background:#fff1f2;
+      color:#9f1239;
+      border-color:#fecdd3;
+    }
+
+    .day-helper{
+      font-size:11px;
+      color:#6b7280;
+      line-height:1.3;
+    }
+
+    .footer-note{
+      padding:14px 16px 18px;
+      color:#6b7280;
+      font-size:12px;
+      border-top:1px solid var(--border);
+      background:#fff;
+    }
+
+    @media (max-width: 1100px){
+      main{
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar{
+        position:static;
+      }
+    }
+
+    @media (max-width: 720px){
+      main{ padding:14px; }
+      .calendar-title{ font-size:20px; min-width:auto; }
+      .day{ min-height:108px; padding:8px; }
+      .day-number{ width:30px; height:30px; flex-basis:30px; font-size:13px; }
+      .weekday{ padding:10px 4px; font-size:11px; }
+      .day-holiday-name{ font-size:10px; min-height:24px; }
+      .day-chip{ font-size:10px; padding:5px 7px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">
+        <i class="bi bi-calendar3"></i>
+      </div>
+      <div>
+        <h1>ADD - Página Inicial</h1>
+        <p>Calendário mensal com abertura direta do formulário</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <a class="btn-link" href="https://coec-epb.github.io/prestacao_de_contas/">
+        <i class="bi bi-file-earmark-text"></i> Abrir formulário
+      </a>
+      <button class="secondary" id="btnHoje">
+        <i class="bi bi-calendar-date"></i> Hoje
+      </button>
+      <button class="secondary" id="btnAtualizar">
+        <i class="bi bi-arrow-repeat"></i> Atualizar
+      </button>
+      <button class="secondary" onclick="logout()">
+        <i class="bi bi-box-arrow-right"></i> Sair
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <aside class="sidebar">
+      <div class="card pad">
+        <div class="kpi-grid">
+          <div class="kpi">
+            <div class="label">Mês exibido</div>
+            <div class="value" id="kpiMes">—</div>
+            <div class="sub" id="kpiMesSub">Visualização atual do calendário</div>
+          </div>
+
+          <div class="kpi">
+            <div class="label">Dias úteis</div>
+            <div class="value" id="kpiUteis">0</div>
+            <div class="sub">No mês atual, desconsiderando finais de semana e feriados</div>
+          </div>
+
+          <div class="kpi">
+            <div class="label">Finais de semana</div>
+            <div class="value" id="kpiFds">0</div>
+            <div class="sub">Sábados e domingos do mês</div>
+          </div>
+
+          <div class="kpi">
+            <div class="label">Feriados</div>
+            <div class="value" id="kpiFeriados">0</div>
+            <div class="sub" id="kpiFeriadosSub">Nacionais e móveis destacados no mês</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad">
+        <div class="legend">
+          <h3><i class="bi bi-palette"></i> Legenda</h3>
+
+          <div class="legend-item">
+            <span class="legend-swatch" style="background:var(--today)"></span>
+            <span>Hoje</span>
+          </div>
+
+          <div class="legend-item">
+            <span class="legend-swatch" style="background:var(--weekend)"></span>
+            <span>Final de semana</span>
+          </div>
+
+          <div class="legend-item">
+            <span class="legend-swatch" style="background:var(--holiday)"></span>
+            <span>Feriado</span>
+          </div>
+
+          <div class="legend-item">
+            <span class="legend-swatch" style="background:#ecfdf3"></span>
+            <span>Data disponível</span>
+          </div>
+
+          <div class="legend-item">
+            <span class="legend-swatch" style="background:#fff1f2"></span>
+            <span>Fora da janela / indisponível</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad">
+        <div style="font-size:15px;font-weight:800;color:var(--primary);margin-bottom:8px;">
+          <i class="bi bi-lightning-charge"></i> Como funciona
+        </div>
+        <div style="font-size:13px;color:#555;line-height:1.6;">
+          Clique em qualquer dia do mês para abrir o formulário.  
+          Se a data estiver dentro da janela permitida, ela já vai preenchida automaticamente.
+        </div>
+      </div>
+    </aside>
+
+    <section class="card calendar-wrap">
+      <div class="calendar-toolbar">
+        <div class="calendar-left">
+          <button class="secondary" id="btnPrevMes">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+
+          <div>
+            <div class="calendar-title" id="calendarTitle">—</div>
+            <div class="calendar-subtitle" id="calendarSubtitle">Clique em um dia para lançar</div>
+          </div>
+
+          <button class="secondary" id="btnNextMes">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+
+        <div class="toolbar-group">
+          <select id="selectMes"></select>
+          <select id="selectAno"></select>
+        </div>
+      </div>
+
+      <div class="pad" style="padding-bottom:0;">
+        <div id="status" class="status"></div>
+      </div>
+
+      <div class="calendar-grid" id="calendarGrid">
+        <!-- preenchido via JS -->
+      </div>
+
+      <div class="footer-note">
+        Desenvolvido por Pedro Fillype – Grupo Energisa
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function logout(){
+      localStorage.clear();
+      window.location.href = "https://coec-epb.github.io/login/";
+    }
+
+    if (localStorage.getItem("logado") !== "true") {
+      logout();
+    }
+
+    const FORM_URL = "https://coec-epb.github.io/prestacao_de_contas/";
+    const state = {
+      current: new Date(),
+      matricula: String(localStorage.getItem("matricula") || "").trim()
+    };
+
+    const MESES = [
+      "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+      "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+    ];
+
+    const WEEKDAYS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+
+    function setStatus(msg, type=""){
+      const el = document.getElementById("status");
+      if (!el) return;
+      el.textContent = msg || "";
+      el.className = "status " + (type || "");
+    }
+
+    function pad(n){
+      return String(n).padStart(2, "0");
+    }
+
+    function toISODate(date){
+      return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}`;
+    }
+
+    function normalizarData(date){
+      const d = new Date(date);
+      d.setHours(0,0,0,0);
+      return d;
+    }
+
+    function sameDate(a, b){
+      return a.getFullYear() === b.getFullYear()
+        && a.getMonth() === b.getMonth()
+        && a.getDate() === b.getDate();
+    }
+
+    function formatarDataLonga(date){
+      return date.toLocaleDateString("pt-BR", {
+        weekday: "long",
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      });
+    }
+
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function calcularPascoa(ano){
+      const a = ano % 19;
+      const b = Math.floor(ano / 100);
+      const c = ano % 100;
+      const d = Math.floor(b / 4);
+      const e = b % 4;
+      const f = Math.floor((b + 8) / 25);
+      const g = Math.floor((b - f + 1) / 3);
+      const h = (19 * a + b - d - g + 15) % 30;
+      const i = Math.floor(c / 4);
+      const k = c % 4;
+      const l = (32 + 2 * e + 2 * i - h - k) % 7;
+      const m = Math.floor((a + 11 * h + 22 * l) / 451);
+      const mes = Math.floor((h + l - 7 * m + 114) / 31);
+      const dia = ((h + l - 7 * m + 114) % 31) + 1;
+      return new Date(ano, mes - 1, dia);
+    }
+
+    function addDias(base, dias){
+      const d = new Date(base);
+      d.setDate(d.getDate() + dias);
+      return d;
+    }
+
+    function getFeriadosAno(ano){
+      const pascoa = calcularPascoa(ano);
+
+      const lista = [
+        { data: `${ano}-01-01`, nome: "Confraternização Universal" },
+        { data: `${ano}-04-21`, nome: "Tiradentes" },
+        { data: `${ano}-05-01`, nome: "Dia do Trabalho" },
+        { data: `${ano}-09-07`, nome: "Independência do Brasil" },
+        { data: `${ano}-10-12`, nome: "Nossa Senhora Aparecida" },
+        { data: `${ano}-11-02`, nome: "Finados" },
+        { data: `${ano}-11-15`, nome: "Proclamação da República" },
+        { data: `${ano}-11-20`, nome: "Dia da Consciência Negra" },
+        { data: `${ano}-12-25`, nome: "Natal" },
+
+        { data: toISODate(addDias(pascoa, -48)), nome: "Carnaval" },
+        { data: toISODate(addDias(pascoa, -47)), nome: "Carnaval" },
+        { data: toISODate(addDias(pascoa, -2)), nome: "Sexta-feira Santa" },
+        { data: toISODate(addDias(pascoa, 60)), nome: "Corpus Christi" }
+      ];
+
+      return lista;
+    }
+
+    function getHolidayMap(ano){
+      const map = new Map();
+      getFeriadosAno(ano).forEach(item => map.set(item.data, item.nome));
+      return map;
+    }
+
+    function obterJanelaPermitida(){
+      const hoje = new Date();
+      hoje.setHours(0,0,0,0);
+
+      const primeiroDiaMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+      primeiroDiaMes.setHours(0,0,0,0);
+
+      let minDate = new Date(primeiroDiaMes);
+
+      if (hoje.getDate() <= 3) {
+        minDate = new Date(hoje);
+        minDate.setDate(hoje.getDate() - 3);
+      }
+
+      const maxDate = new Date(hoje);
+      maxDate.setDate(hoje.getDate() + 3);
+      maxDate.setHours(0,0,0,0);
+
+      return { minDate, maxDate, hoje };
+    }
+
+    function isDentroJanela(date){
+      const { minDate, maxDate } = obterJanelaPermitida();
+      const d = normalizarData(date);
+      return d >= minDate && d <= maxDate;
+    }
+
+    function montarMesAnoSelects(){
+      const mesSel = document.getElementById("selectMes");
+      const anoSel = document.getElementById("selectAno");
+
+      mesSel.innerHTML = MESES.map((m, i) => `<option value="${i}">${m}</option>`).join("");
+
+      const anoAtual = new Date().getFullYear();
+      const anos = [];
+      for (let a = anoAtual - 3; a <= anoAtual + 3; a++){
+        anos.push(`<option value="${a}">${a}</option>`);
+      }
+      anoSel.innerHTML = anos.join("");
+    }
+
+    function atualizarKPIs(ano, mes){
+      const holidayMap = getHolidayMap(ano);
+      const totalDias = new Date(ano, mes + 1, 0).getDate();
+
+      let uteis = 0;
+      let fds = 0;
+      let feriadosNoMes = 0;
+
+      for (let dia = 1; dia <= totalDias; dia++){
+        const d = new Date(ano, mes, dia);
+        const dow = d.getDay();
+        const iso = toISODate(d);
+        const ehFds = dow === 0 || dow === 6;
+        const ehFeriado = holidayMap.has(iso);
+
+        if (ehFds) fds++;
+        if (ehFeriado) feriadosNoMes++;
+        if (!ehFds && !ehFeriado) uteis++;
+      }
+
+      document.getElementById("kpiMes").textContent = `${pad(mes+1)}/${ano}`;
+      document.getElementById("kpiUteis").textContent = uteis;
+      document.getElementById("kpiFds").textContent = fds;
+      document.getElementById("kpiFeriados").textContent = feriadosNoMes;
+      document.getElementById("kpiFeriadosSub").textContent =
+        feriadosNoMes
+          ? `${feriadosNoMes} feriado(s) no mês exibido`
+          : "Nenhum feriado no mês exibido";
+    }
+
+    function abrirFormularioComData(date){
+      const iso = toISODate(date);
+      window.location.href = `${FORM_URL}?data=${encodeURIComponent(iso)}`;
+    }
+
+    function renderCalendar(){
+      const grid = document.getElementById("calendarGrid");
+      const ano = state.current.getFullYear();
+      const mes = state.current.getMonth();
+      const hoje = normalizarData(new Date());
+      const holidayMap = getHolidayMap(ano);
+
+      document.getElementById("calendarTitle").textContent = `${MESES[mes]} ${ano}`;
+      document.getElementById("calendarSubtitle").textContent =
+        "Clique em um dia para abrir o formulário com a data já preenchida";
+
+      document.getElementById("selectMes").value = String(mes);
+      document.getElementById("selectAno").value = String(ano);
+
+      atualizarKPIs(ano, mes);
+
+      let html = "";
+      WEEKDAYS.forEach(d => {
+        html += `<div class="weekday">${d}</div>`;
+      });
+
+      const firstDay = new Date(ano, mes, 1);
+      const startWeekDay = firstDay.getDay();
+      const totalDiasMes = new Date(ano, mes + 1, 0).getDate();
+      const totalDiasMesAnterior = new Date(ano, mes, 0).getDate();
+
+      const cells = [];
+      const totalCells = 42;
+
+      for (let i = 0; i < totalCells; i++){
+        const dayNumber = i - startWeekDay + 1;
+
+        let currentDate;
+        let outside = false;
+
+        if (dayNumber < 1){
+          currentDate = new Date(ano, mes - 1, totalDiasMesAnterior + dayNumber);
+          outside = true;
+        } else if (dayNumber > totalDiasMes){
+          currentDate = new Date(ano, mes + 1, dayNumber - totalDiasMes);
+          outside = true;
+        } else {
+          currentDate = new Date(ano, mes, dayNumber);
+        }
+
+        cells.push({ date: currentDate, outside });
+      }
+
+      cells.forEach(cell => {
+        const date = normalizarData(cell.date);
+        const iso = toISODate(date);
+        const dow = date.getDay();
+        const isWeekend = dow === 0 || dow === 6;
+        const holidayName = holidayMap.get(iso) || "";
+        const isHoliday = !!holidayName;
+        const isToday = sameDate(date, hoje);
+        const dentroJanela = isDentroJanela(date);
+
+        let classes = ["day"];
+        if (cell.outside) classes.push("outside");
+        if (isWeekend) classes.push("weekend");
+        if (isHoliday) classes.push("holiday");
+        if (isToday) classes.push("today");
+        if (!dentroJanela) classes.push("blocked");
+
+        const helper = dentroJanela
+          ? `<div class="day-chip ok"><i class="bi bi-box-arrow-up-right"></i> Abrir formulário</div>`
+          : `<div class="day-chip lock"><i class="bi bi-lock-fill"></i> Fora da janela</div>`;
+
+        const extraTag = isWeekend
+          ? `<span class="tag-mini">FDS</span>`
+          : isHoliday
+            ? `<span class="tag-mini">Feriado</span>`
+            : "";
+
+        html += `
+          <div class="${classes.join(" ")}"
+               data-date="${iso}"
+               title="${escapeHtml(formatarDataLonga(date))}">
+            <div class="day-number-row">
+              <div class="day-number">${date.getDate()}</div>
+              ${extraTag}
+            </div>
+
+            <div class="day-holiday-name">${escapeHtml(holidayName || "")}</div>
+
+            <div class="day-info">
+              ${helper}
+              <div class="day-helper">${escapeHtml(formatarDataLonga(date))}</div>
+            </div>
+          </div>
+        `;
+      });
+
+      grid.innerHTML = html;
+
+      grid.querySelectorAll(".day").forEach(el => {
+        el.addEventListener("click", () => {
+          const iso = el.dataset.date;
+          if (!iso) return;
+
+          const d = new Date(iso + "T00:00:00");
+          abrirFormularioComData(d);
+        });
+      });
+
+      setStatus("Calendário carregado com sucesso.", "success");
+    }
+
+    function mudarMes(delta){
+      state.current = new Date(state.current.getFullYear(), state.current.getMonth() + delta, 1);
+      renderCalendar();
+    }
+
+    (function init(){
+      montarMesAnoSelects();
+
+      const hoje = new Date();
+      state.current = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+
+      document.getElementById("btnPrevMes").addEventListener("click", () => mudarMes(-1));
+      document.getElementById("btnNextMes").addEventListener("click", () => mudarMes(1));
+
+      document.getElementById("btnHoje").addEventListener("click", () => {
+        const d = new Date();
+        state.current = new Date(d.getFullYear(), d.getMonth(), 1);
+        renderCalendar();
+      });
+
+      document.getElementById("btnAtualizar").addEventListener("click", renderCalendar);
+
+      document.getElementById("selectMes").addEventListener("change", (e) => {
+        state.current = new Date(state.current.getFullYear(), Number(e.target.value), 1);
+        renderCalendar();
+      });
+
+      document.getElementById("selectAno").addEventListener("change", (e) => {
+        state.current = new Date(Number(e.target.value), state.current.getMonth(), 1);
+        renderCalendar();
+      });
+
+      renderCalendar();
+    })();
+  </script>
+</body>
+</html>
