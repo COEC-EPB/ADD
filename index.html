@@ -440,6 +440,17 @@
         position:static;
       }
     }
+    .day.empty{
+  min-height:126px;
+  border-right:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:#fff;
+  cursor:default;
+}
+
+.day.empty:hover{
+  background:#fff;
+}
 
     @media (max-width: 720px){
       main{ padding:14px; }
@@ -809,92 +820,78 @@
       });
 
       const firstDay = new Date(ano, mes, 1);
-      const startWeekDay = firstDay.getDay();
-      const totalDiasMes = new Date(ano, mes + 1, 0).getDate();
-      const totalDiasMesAnterior = new Date(ano, mes, 0).getDate();
+const startWeekDay = firstDay.getDay();
+const totalDiasMes = new Date(ano, mes + 1, 0).getDate();
 
-      const cells = [];
-      const totalCells = 42;
+const cells = [];
 
-      for (let i = 0; i < totalCells; i++){
-        const dayNumber = i - startWeekDay + 1;
+// espaços vazios antes do dia 1
+for (let i = 0; i < startWeekDay; i++) {
+  cells.push({ empty: true });
+}
 
-        let currentDate;
-        let outside = false;
+// dias reais do mês
+for (let dia = 1; dia <= totalDiasMes; dia++) {
+  cells.push({
+    empty: false,
+    date: new Date(ano, mes, dia)
+  });
+}
 
-        if (dayNumber < 1){
-          currentDate = new Date(ano, mes - 1, totalDiasMesAnterior + dayNumber);
-          outside = true;
-        } else if (dayNumber > totalDiasMes){
-          currentDate = new Date(ano, mes + 1, dayNumber - totalDiasMes);
-          outside = true;
-        } else {
-          currentDate = new Date(ano, mes, dayNumber);
-        }
+// completa a última linha com vazios
+while (cells.length % 7 !== 0) {
+  cells.push({ empty: true });
+}
 
-        cells.push({ date: currentDate, outside });
-      }
+cells.forEach(cell => {
+  if (cell.empty) {
+    html += `<div class="day empty"></div>`;
+    return;
+  }
 
-      cells.forEach(cell => {
-        const date = normalizarData(cell.date);
-        const iso = toISODate(date);
-        const dow = date.getDay();
-        const isWeekend = dow === 0 || dow === 6;
-        const holidayName = holidayMap.get(iso) || "";
-        const isHoliday = !!holidayName;
-        const isToday = sameDate(date, hoje);
-        const dentroJanela = isDentroJanela(date);
+  const date = normalizarData(cell.date);
+  const iso = toISODate(date);
+  const dow = date.getDay();
+  const isWeekend = dow === 0 || dow === 6;
+  const holidayName = holidayMap.get(iso) || "";
+  const isHoliday = !!holidayName;
+  const isToday = sameDate(date, hoje);
+  const dentroJanela = isDentroJanela(date);
 
-        let classes = ["day"];
-        if (cell.outside) classes.push("outside");
-        if (isWeekend) classes.push("weekend");
-        if (isHoliday) classes.push("holiday");
-        if (isToday) classes.push("today");
-        if (!dentroJanela) classes.push("blocked");
+  let classes = ["day"];
+  if (isWeekend) classes.push("weekend");
+  if (isHoliday) classes.push("holiday");
+  if (isToday) classes.push("today");
+  if (!dentroJanela) classes.push("blocked");
 
-        const helper = dentroJanela
-          ? `<div class="day-chip ok"><i class="bi bi-box-arrow-up-right"></i> Abrir formulário</div>`
-          : `<div class="day-chip lock"><i class="bi bi-lock-fill"></i> Fora da janela</div>`;
+  const helper = dentroJanela
+    ? `<div class="day-chip ok"><i class="bi bi-box-arrow-up-right"></i> Abrir formulário</div>`
+    : `<div class="day-chip lock"><i class="bi bi-lock-fill"></i> Fora da janela</div>`;
 
-        const extraTag = isWeekend
-          ? `<span class="tag-mini">FDS</span>`
-          : isHoliday
-            ? `<span class="tag-mini">Feriado</span>`
-            : "";
+  const extraTag = isWeekend
+    ? `<span class="tag-mini">FDS</span>`
+    : isHoliday
+      ? `<span class="tag-mini">Feriado</span>`
+      : "";
 
-        html += `
-          <div class="${classes.join(" ")}"
-               data-date="${iso}"
-               title="${escapeHtml(formatarDataLonga(date))}">
-            <div class="day-number-row">
-              <div class="day-number">${date.getDate()}</div>
-              ${extraTag}
-            </div>
+  html += `
+    <div class="${classes.join(" ")}"
+         data-date="${iso}"
+         title="${escapeHtml(formatarDataLonga(date))}">
+      <div class="day-number-row">
+        <div class="day-number">${date.getDate()}</div>
+        ${extraTag}
+      </div>
 
-            <div class="day-holiday-name">${escapeHtml(holidayName || "")}</div>
+      <div class="day-holiday-name">${escapeHtml(holidayName || "")}</div>
 
-            <div class="day-info">
-              ${helper}
-              <div class="day-helper">${escapeHtml(formatarDataLonga(date))}</div>
-            </div>
-          </div>
-        `;
-      });
-
-      grid.innerHTML = html;
-
-      grid.querySelectorAll(".day").forEach(el => {
-        el.addEventListener("click", () => {
-          const iso = el.dataset.date;
-          if (!iso) return;
-
-          const d = new Date(iso + "T00:00:00");
-          abrirFormularioComData(d);
-        });
-      });
-
-      setStatus("Calendário carregado com sucesso.", "success");
-    }
+      <div class="day-info">
+        ${helper}
+        <div class="day-helper">${escapeHtml(formatarDataLonga(date))}</div>
+      </div>
+    </div>
+  `;
+});
 
     function mudarMes(delta){
       state.current = new Date(state.current.getFullYear(), state.current.getMonth() + delta, 1);
