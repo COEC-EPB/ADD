@@ -1088,14 +1088,16 @@
         && a.getDate() === b.getDate();
     }
 
-    function escapeHtml(str){
-      return String(str ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
-    }
+    
+function escapeHtml(str) {
+  return String(str ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 
     function formatarDataBR(iso){
       const s = String(iso || "").trim();
@@ -1426,17 +1428,19 @@
         if (isBloqueado) classes.push("bloqueado");
 
         let helper = "";
-        if (isBloqueado) {
+        
+ if (isBloqueado) {
           helper = `<div class="day-chip lock"><i class="bi bi-x-circle"></i> Bloqueado</div>`;
         } else if (isPreenchido) {
           helper = renderMealButtons(registros);
-        } } else {
-  helper = `
-    <div class="day-helper" style="font-weight:700;color:#0097CE;">
-      Toque para lançar
-    </div>
-  `;
-}
+        } else {
+          helper = `
+            <div class="day-helper" style="font-weight:700;color:#0097CE;">
+              Toque para lançar
+            </div>
+          `;
+        }
+
 
         const extraTag = isBloqueado
           ? `<span class="tag-mini" style="color:#991b1b;">BLOQ</span>`
