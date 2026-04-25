@@ -1044,17 +1044,6 @@
   </main>
 
   <script>
-    function authFetch(url, options = {}) {
-  const token = localStorage.getItem("token");
-
-  return fetch(url, {
-    ...options,
-    headers: {
-      ...(options.headers || {}),
-      Authorization: `Bearer ${token}`
-    }
-  });
-}
     const API = "https://long-hall-0aaa.pedro-fillype.workers.dev";
     const FORM_URL = "https://coec-epb.github.io/prestacao_dashboard_1/";
 
@@ -1064,11 +1053,7 @@
     }
 
     // LOGIN TEMPORARIAMENTE DESATIVADO
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      logout();
-    }
+    //if (localStorage.getItem("logado") !== "true") logout();
 
     const state = {
       current: new Date(),
@@ -1248,13 +1233,7 @@ function escapeHtml(str) {
           ano: String(ano)
         });
 
-        const token = localStorage.getItem("token");
-
-        const resp = await fetch(`${API}/buscar?${qs.toString()}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+        const resp = await fetch(`${API}/buscar?${qs.toString()}`);
         if (!resp.ok) return mapa;
 
         const json = await resp.json();
@@ -1300,13 +1279,7 @@ function escapeHtml(str) {
           });
 
           promessas.push(
-            const token = localStorage.getItem("token");
-
-            fetch(`${API}/verificar-bloqueio?${qs.toString()}`, {
-              headers: {
-                Authorization: `Bearer ${token}`
-              }
-            })
+            fetch(`${API}/verificar-bloqueio?${qs.toString()}`)
               .then(r => r.ok ? r.json() : null)
               .then(j => (j && j.ok && j.bloqueado) ? datauso : null)
               .catch(() => null)
