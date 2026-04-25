@@ -1045,18 +1045,14 @@
   <script src="https://coec-epb.github.io/login/auth.js"></script>
   <script>
     if (!isLogged()) {
-  logout();
-}
-
-if (!isLogged()) {
-  logout();
-}
-
-const user = getUser();
-
-if (!user || !user.matricula) {
-  logout();
-}
+      logout();
+    }
+    
+    const user = getUser();
+    
+    if (!user || !user.matricula) {
+      logout();
+    }
 
     const API = "https://long-hall-0aaa.pedro-fillype.workers.dev";
     const FORM_URL = "https://coec-epb.github.io/prestacao_dashboard_1/";
