@@ -1048,6 +1048,10 @@
   logout();
 }
 
+if (!isLogged()) {
+  logout();
+}
+
 const user = getUser();
 
 if (!user || !user.matricula) {
