@@ -1042,22 +1042,30 @@
       </div>
     </section>
   </main>
-
+  <script src="auth.js"></script>
   <script>
+    if (!isLogged()) {
+  window.location.href = "https://coec-epb.github.io/login/";
+}
+
+const user = getUser();
     const API = "https://long-hall-0aaa.pedro-fillype.workers.dev";
     const FORM_URL = "https://coec-epb.github.io/prestacao_dashboard_1/";
 
     function logout(){
-      localStorage.clear();
+      logout();
       window.location.href = "https://coec-epb.github.io/login/";
     }
+    if (!user || !user.matricula) {
+  logout();
+}
 
     // LOGIN TEMPORARIAMENTE DESATIVADO
     //if (localStorage.getItem("logado") !== "true") logout();
 
     const state = {
       current: new Date(),
-      matricula: String(localStorage.getItem("matricula") || "").trim(),
+      matricula: user.matricula,
       registrosPorData: new Map(),
       bloqueados: new Set()
     };
@@ -1233,7 +1241,7 @@ function escapeHtml(str) {
           ano: String(ano)
         });
 
-        const resp = await fetch(`${API}/buscar?${qs.toString()}`);
+        const resp = await authFetch(`${API}/buscar?${qs.toString()}`);
         if (!resp.ok) return mapa;
 
         const json = await resp.json();
@@ -1279,7 +1287,7 @@ function escapeHtml(str) {
           });
 
           promessas.push(
-            fetch(`${API}/verificar-bloqueio?${qs.toString()}`)
+            authFetch(`${API}/verificar-bloqueio?${qs.toString()}`)
               .then(r => r.ok ? r.json() : null)
               .then(j => (j && j.ok && j.bloqueado) ? datauso : null)
               .catch(() => null)
