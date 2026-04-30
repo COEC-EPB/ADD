@@ -1616,21 +1616,7 @@ function escapeHtml(str) {
   });
 });
 
-          try {
-            const item = JSON.parse(raw);
-            renderDetalheRegistro(item);
-
-            if (window.innerWidth <= 720) {
-              document.querySelector(".detail-panel")?.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-              });
-            }
-          } catch (e) {
-            console.error("Erro ao abrir detalhe:", e);
-          }
-        });
-      });
+          
 
       
 
