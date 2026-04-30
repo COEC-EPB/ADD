@@ -1150,7 +1150,7 @@
     };
     function abrirModalDetalhe(item){
   const tipo = rotuloTipo(item.tiporefeicao);
-
+  console.log(item);
   const html = `
     <div class="modal-card">
 
@@ -1167,7 +1167,7 @@
         <div class="modal-item"><strong>Email:</strong> ${escapeHtml(item.email || "-")}</div>
 
         <div class="modal-item"><strong>Regional:</strong> ${escapeHtml(item.regional || "-")}</div>
-        <div class="modal-item"><strong>Polo:</strong> ${escapeHtml(item.polo || "-")}</div>
+        <div class="modal-item"><strong>Polo:</strong> ${escapeHtml(item.polo || item.polo_nome || "-")}
 
         <div class="modal-item"><strong>Horário:</strong> ${escapeHtml(item.horario || "-")}</div>
         <div class="modal-item"><strong>Localidade:</strong> ${escapeHtml(item.localidade || "-")}</div>
@@ -1175,7 +1175,7 @@
         <div class="modal-item"><strong>Sequência:</strong> ${escapeHtml(item.sequencia || "-")}</div>
         <div class="modal-item"><strong>OS/RR/SS:</strong> ${escapeHtml(item.os || "-")}</div>
 
-        <div class="modal-item"><strong>Nº ADD:</strong> ${escapeHtml(item.add || "-")}</div>
+        <div class="modal-item"><strong>Nº ADD:</strong> ${escapeHtml(item.num_add || item.numero_add || item.add || "-")}
 
       </div>
 
