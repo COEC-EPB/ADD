@@ -914,6 +914,47 @@
         font-size:9px;
       }
     }
+    .modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+}
+
+.modal-box{
+  background:#fff;
+  border-radius:16px;
+  width:95%;
+  max-width:600px;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+  overflow:hidden;
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px;
+  border-bottom:1px solid #eee;
+}
+
+.modal-header h2{
+  margin:0;
+}
+
+.modal-header button{
+  border:none;
+  background:none;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.modal-content{
+  padding:16px;
+}
   </style>
 </head>
 <body>
@@ -1040,8 +1081,20 @@
       <div class="footer-note">
         Desenvolvido por Pedro Fillype – Grupo Energisa
       </div>
+<div id="modalDetalhe" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>Detalhes do Dia</h2>
+      <button onclick="fecharModal()">✕</button>
+    </div>
+
+    <div id="modalConteudo"></div>
+  </div>
+</div>
+      
     </section>
   </main>
+  
   <script src="https://coec-epb.github.io/login/auth.js"></script>
   <script>
     if (!isLogged()) {
@@ -1065,6 +1118,42 @@
       registrosPorData: new Map(),
       bloqueados: new Set()
     };
+    function abrirModalDetalhe(item){
+  const tipo = rotuloTipo(item.tiporefeicao);
+  const cls = classeTipo(item.tiporefeicao);
+
+  const html = `
+    <div class="modal-content">
+
+      <h3 style="color:#2563eb;margin-bottom:10px;">
+        ${escapeHtml(item.datauso)} — ${escapeHtml(tipo)}
+      </h3>
+
+      <p><strong>ID:</strong> ${escapeHtml(item.id || "-")}</p>
+      <p><strong>Matrícula:</strong> ${escapeHtml(item.matricula || "-")}</p>
+      <p><strong>Nome:</strong> ${escapeHtml(item.nome || "-")}</p>
+      <p><strong>Email:</strong> ${escapeHtml(item.email || "-")}</p>
+
+      <p><strong>Regional:</strong> ${escapeHtml(item.regional || "-")}</p>
+      <p><strong>Polo:</strong> ${escapeHtml(item.polo || "-")}</p>
+
+      <p><strong>Horário:</strong> ${escapeHtml(item.horario || "-")}</p>
+      <p><strong>Localidade:</strong> ${escapeHtml(item.localidade || "-")}</p>
+
+      <p><strong>Sequência:</strong> ${escapeHtml(item.sequencia || "-")}</p>
+      <p><strong>OS/RR/SS:</strong> ${escapeHtml(item.os || "-")}</p>
+      <p><strong>Nº ADD:</strong> ${escapeHtml(item.add || "-")}</p>
+
+    </div>
+  `;
+
+  document.getElementById("modalConteudo").innerHTML = html;
+  document.getElementById("modalDetalhe").style.display = "flex";
+}
+
+function fecharModal(){
+  document.getElementById("modalDetalhe").style.display = "none";
+}
 
     const MESES = [
       "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -1497,10 +1586,27 @@ function escapeHtml(str) {
   });
 });
 
-      grid.querySelectorAll(".meal-btn").forEach(btn => {
-        btn.addEventListener("click", (ev) => {
-          ev.stopPropagation();
-          const raw = btn.getAttribute("data-detail");
+     grid.querySelectorAll(".meal-btn").forEach(btn => {
+  btn.addEventListener("click", (ev) => {
+    ev.stopPropagation();
+
+    const raw = btn.getAttribute("data-detail");
+    if (!raw) return;
+
+    try {
+      const item = JSON.parse(raw);
+
+      // 👉 mantém lateral
+      renderDetalheRegistro(item);
+
+      // 👉 NOVO: abre modal
+      abrirModalDetalhe(item);
+
+    } catch (e) {
+      console.error("Erro ao abrir detalhe:", e);
+    }
+  });
+});
           if (!raw) return;
 
           try {
