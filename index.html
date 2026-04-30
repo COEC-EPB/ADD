@@ -914,7 +914,7 @@
         font-size:9px;
       }
     }
-    .modal-overlay{
+ .modal-overlay{
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.4);
@@ -927,9 +927,9 @@
 .modal-box{
   background:#fff;
   border-radius:16px;
-  width:95%;
-  max-width:600px;
-  box-shadow:0 10px 30px rgba(0,0,0,.2);
+  width:90%;
+  max-width:520px; /* menor */
+  box-shadow:0 15px 40px rgba(0,0,0,.25);
   overflow:hidden;
 }
 
@@ -937,23 +937,49 @@
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:16px;
+  padding:16px 18px;
   border-bottom:1px solid #eee;
 }
 
 .modal-header h2{
   margin:0;
+  font-size:22px;
 }
 
-.modal-header button{
-  border:none;
-  background:none;
-  font-size:20px;
-  cursor:pointer;
+.modal-body{
+  padding:18px;
 }
 
-.modal-content{
+/* CARD INTERNO */
+.modal-card{
+  border:1px solid #e5e7eb;
+  border-radius:14px;
   padding:16px;
+  box-shadow:0 4px 10px rgba(0,0,0,.05);
+}
+
+/* TÍTULO AZUL */
+.modal-title{
+  font-size:18px;
+  font-weight:800;
+  color:#2563eb;
+  margin-bottom:12px;
+}
+
+/* GRID 2 COLUNAS */
+.modal-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px 20px;
+  font-size:14px;
+}
+
+.modal-item{
+  line-height:1.4;
+}
+
+.modal-item strong{
+  color:#111827;
 }
   </style>
 </head>
@@ -1083,12 +1109,16 @@
       </div>
 <div id="modalDetalhe" class="modal-overlay">
   <div class="modal-box">
+    
     <div class="modal-header">
       <h2>Detalhes do Dia</h2>
       <button onclick="fecharModal()">✕</button>
     </div>
 
-    <div id="modalConteudo"></div>
+    <div class="modal-body">
+      <div id="modalConteudo"></div>
+    </div>
+
   </div>
 </div>
       
@@ -1120,29 +1150,34 @@
     };
     function abrirModalDetalhe(item){
   const tipo = rotuloTipo(item.tiporefeicao);
-  const cls = classeTipo(item.tiporefeicao);
 
   const html = `
-    <div class="modal-content">
+    <div class="modal-card">
 
-      <h3 style="color:#2563eb;margin-bottom:10px;">
-        ${escapeHtml(item.datauso)} — ${escapeHtml(tipo)}
-      </h3>
+      <div class="modal-title">
+        📅 ${escapeHtml(item.datauso)} — ${escapeHtml(tipo)}
+      </div>
 
-      <p><strong>ID:</strong> ${escapeHtml(item.id || "-")}</p>
-      <p><strong>Matrícula:</strong> ${escapeHtml(item.matricula || "-")}</p>
-      <p><strong>Nome:</strong> ${escapeHtml(item.nome || "-")}</p>
-      <p><strong>Email:</strong> ${escapeHtml(item.email || "-")}</p>
+      <div class="modal-grid">
 
-      <p><strong>Regional:</strong> ${escapeHtml(item.regional || "-")}</p>
-      <p><strong>Polo:</strong> ${escapeHtml(item.polo || "-")}</p>
+        <div class="modal-item"><strong>ID:</strong> ${escapeHtml(item.id || "-")}</div>
+        <div class="modal-item"><strong>Matrícula:</strong> ${escapeHtml(item.matricula || "-")}</div>
 
-      <p><strong>Horário:</strong> ${escapeHtml(item.horario || "-")}</p>
-      <p><strong>Localidade:</strong> ${escapeHtml(item.localidade || "-")}</p>
+        <div class="modal-item"><strong>Nome:</strong> ${escapeHtml(item.nome || "-")}</div>
+        <div class="modal-item"><strong>Email:</strong> ${escapeHtml(item.email || "-")}</div>
 
-      <p><strong>Sequência:</strong> ${escapeHtml(item.sequencia || "-")}</p>
-      <p><strong>OS/RR/SS:</strong> ${escapeHtml(item.os || "-")}</p>
-      <p><strong>Nº ADD:</strong> ${escapeHtml(item.add || "-")}</p>
+        <div class="modal-item"><strong>Regional:</strong> ${escapeHtml(item.regional || "-")}</div>
+        <div class="modal-item"><strong>Polo:</strong> ${escapeHtml(item.polo || "-")}</div>
+
+        <div class="modal-item"><strong>Horário:</strong> ${escapeHtml(item.horario || "-")}</div>
+        <div class="modal-item"><strong>Localidade:</strong> ${escapeHtml(item.localidade || "-")}</div>
+
+        <div class="modal-item"><strong>Sequência:</strong> ${escapeHtml(item.sequencia || "-")}</div>
+        <div class="modal-item"><strong>OS/RR/SS:</strong> ${escapeHtml(item.os || "-")}</div>
+
+        <div class="modal-item"><strong>Nº ADD:</strong> ${escapeHtml(item.add || "-")}</div>
+
+      </div>
 
     </div>
   `;
