@@ -981,6 +981,36 @@
 .modal-item strong{
   color:#111827;
 }
+    #popupSexta {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+#popupSexta .modal-box{
+  background: #fff;
+  width: 90%;
+  max-width: 450px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 15px 50px rgba(0,0,0,.35);
+  animation: popupEntrada .25s ease;
+}
+
+@keyframes popupEntrada{
+  from{
+    opacity:0;
+    transform:scale(.9);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
   </style>
 </head>
 <body>
