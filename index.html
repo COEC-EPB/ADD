@@ -1121,7 +1121,8 @@
 
   </div>
 </div>
-      
+      <div id="popupSexta" class="modal-overlay" style="display:none;">
+  <div class="modal-box" 
     </section>
   </main>
   
@@ -1657,6 +1658,28 @@ function escapeHtml(str) {
       setStatus("Calendário carregado com sucesso.", "success");
     }
 
+    function fecharPopupSexta() {
+  document.getElementById("popupSexta").style.display = "none";
+}
+
+function verificarLembreteSexta() {
+
+  const hoje = new Date();
+
+  // 5 = sexta-feira
+  if (hoje.getDay() !== 5) return;
+
+  const chave = "popup_add_" +
+    hoje.toISOString().slice(0,10);
+
+  // já mostrou hoje
+  if (localStorage.getItem(chave)) return;
+
+  document.getElementById("popupSexta").style.display = "flex";
+
+  localStorage.setItem(chave, "1");
+}
+
     async function carregarDadosDoMes(){
       const ano = state.current.getFullYear();
       const mes = state.current.getMonth();
@@ -1707,6 +1730,7 @@ function escapeHtml(str) {
       });
 
       carregarDadosDoMes();
+      verificarLembreteSexta();
     })();
   </script>
    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ab3e837119ed4133bd616d3b06ef0e25"}'></script><!-- End Cloudflare Web Analytics -->
