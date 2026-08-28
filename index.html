@@ -1664,20 +1664,8 @@ function escapeHtml(str) {
 
 function verificarLembreteSexta() {
 
-  const hoje = new Date();
-
-  // 5 = sexta-feira
-  if (hoje.getDay() !== 5) return;
-
-  const chave = "popup_add_" +
-    hoje.toISOString().slice(0,10);
-
-  // já mostrou hoje
-  if (localStorage.getItem(chave)) return;
-
   document.getElementById("popupSexta").style.display = "flex";
 
-  localStorage.setItem(chave, "1");
 }
 
     async function carregarDadosDoMes(){
