@@ -1737,8 +1737,32 @@ function escapeHtml(str) {
 
 function verificarLembreteSexta() {
 
+  const hoje = new Date();
+
+  // Domingo=0
+  // Segunda=1
+  // ...
+  // Sexta=5
+
+  const diaSemana = hoje.getDay();
+
+  // Só segunda ou sexta
+  if (diaSemana !== 1 && diaSemana !== 5) {
+    return;
+  }
+
+  // mostra apenas uma vez por dia
+  const chave =
+    "popup_add_" +
+    hoje.toISOString().slice(0,10);
+
+  if (localStorage.getItem(chave)) {
+    return;
+  }
+
   document.getElementById("popupSexta").style.display = "flex";
 
+  localStorage.setItem(chave, "1");
 }
 
     async function carregarDadosDoMes(){
